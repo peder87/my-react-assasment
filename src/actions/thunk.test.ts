@@ -28,19 +28,22 @@ describe('testing diffFriends function', () => {
 })
 
 describe('testing updateUserAndFriends', () => {
-    it('should return a UsersState object madeup all users that has change something in their relations', () => {
+    it('should monicelli add 3 new friends and remove one and necchi still a friends', () => {
         const user = {
             id: 'mnc',
             name: 'monicelli',
-            friends: ['msc'],
+            friends: ['msc', 'ssl', 'mln', 'ncc'],
         }
         const users = {
-            mnc: { id: 'mnc', name: 'monicelli', friends: ['prz'] },
+            mnc: { id: 'mnc', name: 'monicelli', friends: ['prz', 'ncc'] },
             msc: { id: 'msc', name: 'mascetti', friends: ['prz'] },
-            prz: { id: 'prz', name: 'perozzi', friends: ['msc', 'mnc'] },
+            prz: { id: 'prz', name: 'perozzi', friends: ['msc', 'mnc', 'ncc'] },
+            ncc: { id: 'ncc', name: 'necchi', friends: ['prz', 'mnc'] },
+            mln: { id: 'mln', name: 'melandri', friends: ['ssl'] },
+            ssl: { id: 'ssl', name: 'sassaroli', friends: ['mln'] },
         }
         const expected = {
-            mnc: { id: 'mnc', name: 'monicelli', friends: ['msc'] },
+            [user.id]: user,
             msc: {
                 id: 'msc',
                 name: 'mascetti',
@@ -49,8 +52,11 @@ describe('testing updateUserAndFriends', () => {
             prz: {
                 id: 'prz',
                 name: 'perozzi',
-                friends: ['msc'],
+                friends: ['msc', 'ncc'],
             },
+            ncc: { id: 'ncc', name: 'necchi', friends: ['prz', 'mnc'] },
+            mln: { id: 'mln', name: 'melandri', friends: ['ssl', 'mnc'] },
+            ssl: { id: 'ssl', name: 'sassaroli', friends: ['mln', 'mnc'] },
         }
         const updated = updateUserAndFriends(user, users)
         expect(updated).toMatchObject(expected)
