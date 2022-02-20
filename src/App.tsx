@@ -8,7 +8,7 @@ import { UserDetail } from './pages/detail';
 
 export enum RouteEnum {
   'HOME' = '/',
-  'NEW_USERS' = 'newUsers',
+  'NEW_USERS' = 'newUser',
   'USER'= 'user'
 }
 
