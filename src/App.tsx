@@ -1,25 +1,29 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { ThemeProvider } from 'styled-components';
+import { theme } from './style/theme';
+import { Reset } from 'styled-reset'
+import { Routes, Route } from 'react-router-dom'
+import { Users } from './pages/users';
+import { NewUser } from './pages/newUser';
+import { UserDetail } from './pages/detail';
+
+export enum RouteEnum {
+  'HOME' = '/',
+  'NEW_USERS' = 'newUsers',
+  'USER'= 'user'
+}
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      <Reset />
+      <ThemeProvider theme={theme}>
+        <Routes>
+          <Route path={RouteEnum.NEW_USERS} element={<NewUser />} />
+          <Route path="user/:userId"  element={<UserDetail />} />
+          <Route path={RouteEnum.HOME} element={<Users />} />
+        </Routes>
+      </ThemeProvider>
+    </>
   );
 }
 
