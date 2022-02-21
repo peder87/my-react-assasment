@@ -3,8 +3,8 @@ import styled from 'styled-components'
 type ButtonProps = {
   text: string
   click: () => void
-  disabled?: boolean
-} & typeof defaultProps
+  disabled?:boolean
+}
 
 const defaultProps = {
   disabled: false
