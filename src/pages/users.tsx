@@ -1,5 +1,5 @@
 import { useNavigate } from 'react-router-dom'
-import { RouteEnum } from '../App'
+import { RouteEnum } from '../routes/routes'
 import { Button } from '../components/button/button'
 import { useAppSelector } from '../reducers'
 
