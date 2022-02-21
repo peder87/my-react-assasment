@@ -1,5 +1,7 @@
 import { DefaultTheme } from 'styled-components'
 import { primary, secondary } from './colors'
+export type ThemeType = typeof theme
+
 export const theme: DefaultTheme = {
     palette: {
         common: {

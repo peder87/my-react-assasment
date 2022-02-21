@@ -1,4 +1,5 @@
 import 'styled-components'
+import { ThemeType } from './theme'
 
 interface Palette {
     main: string
@@ -8,7 +9,7 @@ interface Palette {
 }
 
 declare module 'styled-components' {
-    export interface DefaultTheme {
+    export interface DefaultTheme extends ThemeType {
         palette: {
             common: {
                 black: string
