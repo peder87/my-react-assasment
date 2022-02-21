@@ -1,7 +1,8 @@
 import { ThemeProvider } from 'styled-components';
-import { theme } from './style/theme';
 import { Reset } from 'styled-reset'
 import { Routes, Route } from 'react-router-dom'
+import { GlobalStyle } from './style/globalStyle';
+import { theme } from './style/theme';
 import { Users } from './pages/users';
 import { NewUser } from './pages/newUser';
 import { UserDetail } from './pages/detail';
@@ -16,6 +17,7 @@ function App() {
   return (
     <>
       <Reset />
+      <GlobalStyle />
       <ThemeProvider theme={theme}>
         <Routes>
           <Route path={RouteEnum.NEW_USERS} element={<NewUser />} />

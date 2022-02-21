@@ -21,14 +21,3 @@ declare module 'styled-components' {
         }
     }
 }
-
-// declare module 'styled-components' {
-//     export interface DefaultTheme {
-//         colors: {
-//             dark: '#40514E'
-//             primary: '#11999E'
-//             background: '#E4F9F5'
-//             accent: '#30E3CA'
-//         }
-//     }
-// }

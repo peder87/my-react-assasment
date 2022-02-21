@@ -1,6 +1,6 @@
 import { fireEvent, render,screen } from "@testing-library/react";
 import { ReactElement } from "react";
-import { withTheme } from "../../utils/themeProviderHoc";
+import { withTheme } from "../../utils/withTheme";
 import { Button } from "./button";
 
 describe('testing button', () => {
