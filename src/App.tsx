@@ -2,6 +2,7 @@ import { ThemeProvider } from 'styled-components';
 import { Reset } from 'styled-reset'
 import { Routes, Route } from 'react-router-dom'
 import { GlobalStyle } from './style/globalStyle';
+import { Toaster } from 'react-hot-toast'
 import { theme } from './style/theme';
 import { routes } from './routes/routes';
 
@@ -11,6 +12,7 @@ function App() {
     <>
       <Reset />
       <GlobalStyle />
+      <Toaster position='top-center'/>
       <ThemeProvider theme={theme}>
         <Routes>
           {
