@@ -1,0 +1,48 @@
+import { fireEvent, render, screen } from '@testing-library/react'
+import { withTheme } from '../../utils/withTheme'
+import { FriendItem, FRIEND_ACTION } from './friendItem'
+
+describe('friendItem', () => {
+    const props = {
+        id: 'mln',
+        name: 'melandri',
+        actionCallback: jest.fn(),
+        alreadyFriends: true,
+    }
+    const WrapppedFriendItem = withTheme(FriendItem)
+
+    const setup = (ui) => {
+        render(ui)
+        return {
+            wrapper: screen.getByTestId('friendItem'),
+            name: screen.getByTestId('friendName'),
+            btn: screen.getByRole('button'),
+        }
+    }
+
+    it('should render properly', () => {
+        const { wrapper, name } = setup(<WrapppedFriendItem {...props} />)
+        expect(wrapper).toBeInTheDocument()
+        expect(name).toHaveTextContent(props.name)
+    })
+
+    it('should click shoud trigger action REMOVE', () => {
+        const { btn } = setup(<WrapppedFriendItem {...props} />)
+        fireEvent.click(btn)
+        expect(props.actionCallback).toBeCalledWith({
+            id: props.id,
+            action: FRIEND_ACTION.REMOVE,
+        })
+    })
+
+    it('should click shoud trigger action ADD', () => {
+        const { btn } = setup(
+            <WrapppedFriendItem {...props} alreadyFriends={false} />
+        )
+        fireEvent.click(btn)
+        expect(props.actionCallback).toBeCalledWith({
+            id: props.id,
+            action: FRIEND_ACTION.ADD,
+        })
+    })
+})

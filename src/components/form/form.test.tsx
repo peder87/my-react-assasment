@@ -4,8 +4,6 @@ import { withTheme } from "../../utils/withTheme";
 import { Form } from "./form";
 import userEvent from "@testing-library/user-event";
 
-
-
 describe('testing form', () => {
   afterEach(() => {
     cleanup()
@@ -13,6 +11,7 @@ describe('testing form', () => {
 
   const MyForm = withTheme(Form)
   const props = {
+    currentUsername: '',
     onSubmit: jest.fn(),
     pushNotify: jest.fn(),
     userList: []
@@ -21,14 +20,14 @@ describe('testing form', () => {
   const setup = (ui:ReactElement) => {
     render(ui)
     return  {
-      btn: screen.getByRole('button'),
+      btn: screen.getByTestId('submit'),
       input: screen.getByTestId('input'),
       form: screen.getByTestId('form')
     }
-  } 
+  }
 
   it('should render form in the dom', () => {
-    const {form, input, btn} = setup(<MyForm {...props} />)
+    const {form, btn, input} = setup(<MyForm {...props} />)
     expect(form).toBeInTheDocument()
     expect(btn).toBeInTheDocument()
     expect(input).toBeInTheDocument()
@@ -59,16 +58,16 @@ describe('testing form', () => {
   })
   
   it('should submit the form if input value is unique', () => {
-    const { input, btn } = setup(<MyForm {...props} currentUsername="" />)
+    const { input, form } = setup(<MyForm {...props} currentUsername="" />)
     userEvent.type(input,'birillo')
-    fireEvent.click(btn)
+    fireEvent.submit(form)
     expect(props.onSubmit).toHaveBeenCalledWith('birillo')
   })
   
   it('should trigger notify event if inputvalue is not unique and reset input field', () => {
-    const { input, btn } = setup(<MyForm {...props} currentUsername="" userList={['birillo']} />)
+    const { input, form } = setup(<MyForm {...props} currentUsername="" userList={['birillo']} />)
     userEvent.type(input,'birillo')
-    fireEvent.click(btn)
+    fireEvent.submit(form)
     expect(props.pushNotify).toHaveBeenCalled()
     expect(input).toHaveValue('')
   })

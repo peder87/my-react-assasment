@@ -11,28 +11,29 @@ const defaultProps = {
 }
 
 export function Button(props: ButtonProps) {
-  return (<StyledButton disabled={props.disabled} isActive={!props.disabled} onClick={props.click}>{props.text}</StyledButton>)
+  return (<StyledButton
+    disabled={props.disabled}
+    onClick={props.click}>{props.text}</StyledButton>)
 }
 
 Button.defaultProps = defaultProps
 
 interface StyledButtonProps {
-  readonly isActive: boolean
 }
 
 const StyledButton = styled.button<StyledButtonProps>`
   border: solid .2rem;
   box-sizing: border-box;
-  border-color: ${props => props.isActive ? props.theme.palette.primary.main: props.theme.palette.primary.disabled};
+  border-color: ${props => props.theme.palette.primary.main};
   padding: .5rem;
   border-radius: .2rem;
-  color: ${props => props.isActive ? props.theme.palette.secondary?.light : props.theme.palette.common.disabled};
+  color: ${props => props.theme.palette.common.white};
   font-size: 1rem;
   letter-spacing: .15rem;
-  background: ${props => props.isActive ? props.theme.palette.primary.main : props.theme.palette.primary.disabled};
+  background: ${props => props.theme.palette.primary.main};
   transition: border-color .1s ease-out;
+  transition: background-color .3s ease-out;
   &:hover {
-    cursor: ${props => props.isActive ? 'pointer' : 'default'};
-    border-color: ${props => props.theme.palette.primary.dark};
+    cursor: 'pointer';
   }
 `

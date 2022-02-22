@@ -1,11 +1,10 @@
 import { withLayout } from '../components/layout/layout'
-import { UserDetail } from '../pages/detail'
 import { NewUser } from '../pages/newUser'
 import { Users } from '../pages/users'
 
 export enum RouteEnum {
     'HOME' = '/',
-    'NEW_USERS' = 'newUser',
+    'NEW_USERS' = 'user',
     'USER' = 'user',
 }
 
@@ -23,6 +22,6 @@ export const routes = [
     {
         path: `${RouteEnum.NEW_USERS}/:userId`,
         exact: true,
-        Component: withLayout(UserDetail),
+        Component: withLayout(NewUser),
     },
 ]

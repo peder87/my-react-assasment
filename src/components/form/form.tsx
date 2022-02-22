@@ -1,19 +1,13 @@
 import { useState } from "react"
-import styled from "styled-components"
-import { Button } from "../button/button"
-import { TextInput } from "../input/textInput"
+import { FormWrapper } from "./form.style"
 
-
-type FormProps = {
-  currentUsername?: string
+interface FormProps {
+  currentUsername: string
   userList: string[]
   onSubmit: (s:string) => void
   pushNotify: () => void
-} & typeof dProps 
-
-const dProps = {
-  currentUsername: ''
 } 
+
 
 // export function Form(p: FormProps) {
 export const Form = (p: FormProps) => {
@@ -26,20 +20,12 @@ export const Form = (p: FormProps) => {
     }
     p.onSubmit(inputValue)
   }
-  return <FormWrapper data-testid="form">
-      <TextInput onInputChange={text => setInputValue(text)} value={inputValue} />
-      <Button text="salva" click={handleButtonClick} disabled={inputValue === ''} />
+  return <FormWrapper >
+    <form onSubmit={handleButtonClick} data-testid="form">
+      <fieldset>
+        <input  type="text" data-testid="input" onChange={e => setInputValue(e.target.value)} value={inputValue} placeholder="inserisci un nome utente" />
+        <button type="button" data-testid="submit" disabled={inputValue === ''}>summit</button>
+      </fieldset>
+    </form>
   </FormWrapper>
 }
-
-Form.defaultProps = dProps
-
-const FormWrapper = styled.div`
-  display: flex;
-  width: 100%;
-  align-items: center;
-
-  & input:first-child {
-    flex-grow: 1;
-  }
-`
