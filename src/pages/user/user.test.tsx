@@ -1,4 +1,4 @@
-import { getCurrentUser } from "./newUser";
+import { getCurrentUser } from "./user";
 
 describe('testing getCurrent User', () => {
   const users = {

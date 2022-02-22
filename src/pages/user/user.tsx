@@ -2,11 +2,11 @@ import { useState } from 'react'
 import toast from 'react-hot-toast'
 import { useParams } from 'react-router-dom'
 import styled from 'styled-components'
-import { Form } from '../components/form/form'
-import { FriendItem, FRIEND_ACTION } from '../components/friendItem/friendItem'
-import { useAppSelector } from '../reducers'
-import { UsersState } from '../reducers/users'
-import { getRandomIcon, NotifyType } from '../utils/emoji'
+import { Form } from '../../components/form/form'
+import { FriendItem, FRIEND_ACTION } from '../../components/friendItem/friendItem'
+import { useAppSelector } from '../../reducers'
+import { UsersState } from '../../reducers/users'
+import { getRandomIcon, NotifyType } from '../../utils/emoji'
 
 
 export const getCurrentUser = (users:UsersState, id: string | undefined): { id?: string, name: string, friends: string[]} => {
