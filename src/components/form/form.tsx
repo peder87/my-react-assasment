@@ -24,7 +24,7 @@ export const Form = (p: FormProps) => {
     <form onSubmit={handleButtonClick} data-testid="form">
       <fieldset>
         <input  type="text" data-testid="input" onChange={e => setInputValue(e.target.value)} value={inputValue} placeholder="inserisci un nome utente" />
-        <button type="button" data-testid="submit" disabled={inputValue === ''}>summit</button>
+        <button type="button" data-testid="submit" disabled={inputValue === ''}>salva</button>
       </fieldset>
     </form>
   </FormWrapper>

@@ -4,8 +4,17 @@ export interface UsersState {
     [id: string]: User
 }
 
+const initState = {
+    mnc: { id: 'mnc', name: 'monicelli', friends: ['prz', 'ncc'] },
+    msc: { id: 'msc', name: 'mascetti', friends: ['prz'] },
+    prz: { id: 'prz', name: 'perozzi', friends: ['msc', 'mnc', 'ncc'] },
+    ncc: { id: 'ncc', name: 'necchi', friends: ['prz', 'mnc'] },
+    mln: { id: 'mln', name: 'melandri', friends: ['ssl'] },
+    ssl: { id: 'ssl', name: 'sassaroli', friends: ['mln'] },
+}
+
 export function userReducers(
-    state: UsersState = {},
+    state: UsersState = initState,
     action: UsersActions
 ): UsersState {
     switch (action.type) {

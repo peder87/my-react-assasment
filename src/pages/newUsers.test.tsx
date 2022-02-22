@@ -8,7 +8,7 @@ describe('testing getCurrent User', () => {
     ncc: { id: 'ncc', name: 'necchi', friends: ['prz', 'mnc'] },
     mln: { id: 'mln', name: 'melandri', friends: ['ssl'] },
     ssl: { id: 'ssl', name: 'sassaroli', friends: ['mln'] },
-}
+  }
   it('should getCurrentUser return a new user', () => {
     const result = getCurrentUser(users,'grn')
     expect(result).toEqual({name: '', friends: []})

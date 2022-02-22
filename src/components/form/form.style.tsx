@@ -34,17 +34,22 @@ export const FormWrapper = styled.div`
   }
   & button {
     transition: background-color .3s ease-out;
-    background: white;
+    background-color: #77ACF1;
     border: none;
     border-radius: 17px;
     padding-left: 1rem;
     padding-right: 1rem;
     box-shadow: 0px 4px 40px 10px rgba(0,0,0,.2);
     cursor: pointer;
-    color: #666;
+    color: #fff;
+    font-size: 1rem;
+    text-transform: uppercase;
     &:disabled {
       background-color: ${p => p.theme.palette.common.disabled};
       color: ${p => p.theme.palette.common.black};
+      &:hover {
+        cursor: default;
+      }
     }
   }
 `

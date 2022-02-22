@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { useParams } from 'react-router-dom'
+import styled from 'styled-components'
 import { Form } from '../components/form/form'
 import { FriendItem, FRIEND_ACTION } from '../components/friendItem/friendItem'
 import { useAppSelector } from '../reducers'
@@ -12,7 +13,7 @@ export const getCurrentUser = (users:UsersState, id: string | undefined): { id?:
   return users[id] || newUser
 }
 
-export function NewUser() {
+export const NewUser = () => {
   const { userId } = useParams<"userId">()
   const { users, currentUser } = useAppSelector(({users}) => {
     return {
@@ -23,7 +24,7 @@ export function NewUser() {
   const [friends, setFriends] = useState<string[]>(currentUser.friends)
 
   const usersList = users.map(users => users.name)
-  const handleSubmit = () => {}
+  const handleSubmit = () => { }
   const pushNotify = () => {}
 
   const friendCallback = ({action, id}: {id:string, action: FRIEND_ACTION }) => {
@@ -41,11 +42,19 @@ export function NewUser() {
     <div>
       <Form userList={usersList} onSubmit={handleSubmit} pushNotify={pushNotify} currentUsername={currentUser.name} />
       <div>
-        {users.length === 0 && <p>no friends</p>}
-        {users.length > 0 && <div>
-          { users.map(user => <FriendItem {...user} actionCallback={friendCallback} alreadyFriends={friends.includes(user.id)} /> )}
-        </div>}
+        {
+          users.length === 0 && <p>no friends</p>
+        }
+        {users.length > 0 && <List>
+          { users.map(user => <FriendItem key={user.id} {...user} actionCallback={friendCallback} alreadyFriends={friends.includes(user.id)} /> )}
+        </List>}
       </div>
     </div>
   )
 }
+
+const List = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  
+`

@@ -1,3 +1,4 @@
+import { FriendWrapper, AddBtn, RemoveBtn } from "./friendItem.style"
 
 interface FriendsItemProps {
   id: string
@@ -17,8 +18,8 @@ export const FriendItem = (p:FriendsItemProps) => {
     const action = p.alreadyFriends ? FRIEND_ACTION.REMOVE: FRIEND_ACTION.ADD
     p.actionCallback({id: p.id, action})
   }
-  return <div data-testid="friendItem">
+  return <FriendWrapper add={!p.alreadyFriends} data-testid="friendItem" role="button" onClick={btnHandler}>
     <span data-testid="friendName">{p.name}</span>
-    <button onClick={btnHandler}>{p.alreadyFriends ? 'rimuovi': 'aggiungi'}</button>
-  </div>
+    {p.alreadyFriends ? <RemoveBtn /> : <AddBtn />}
+  </FriendWrapper>
 }
