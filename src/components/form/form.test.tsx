@@ -68,7 +68,7 @@ describe('testing form', () => {
     const { input, form } = setup(<MyForm {...props} currentUsername="" userList={['birillo']} />)
     userEvent.type(input,'birillo')
     fireEvent.submit(form)
-    expect(props.pushNotify).toHaveBeenCalled()
+    expect(props.pushNotify).toHaveBeenCalledWith('birillo')
     expect(input).toHaveValue('')
   })
 
