@@ -20,9 +20,11 @@ const Wrapper = styled.div`
   height: 100vh;
   & > div {
     height: 100vh;
-    border: 1px solid red;
     width: 600px;
     margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
   }
 `
 

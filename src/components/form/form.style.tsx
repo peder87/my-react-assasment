@@ -9,7 +9,8 @@ export const FormWrapper = styled.div`
   }
   & form fieldset {
     display: block;
-    margin: 70px auto;
+    margin: 0 auto;
+    margin-bottom: 4rem;
     width: 100%;
     height: 35px;
     position: relative;

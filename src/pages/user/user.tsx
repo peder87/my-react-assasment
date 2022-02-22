@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import toast from 'react-hot-toast'
 import { useParams } from 'react-router-dom'
-import styled from 'styled-components'
+import { List, UserWrapper } from './user.style'
 import { Form } from '../../components/form/form'
 import { FriendItem, FRIEND_ACTION } from '../../components/friendItem/friendItem'
 import { useAppSelector } from '../../reducers'
@@ -44,22 +44,18 @@ export const NewUser = () => {
   }
 
   return (
-    <div>
-      <Form userList={usersList} onSubmit={handleSubmit} pushNotify={pushNotify} currentUsername={currentUser.name} />
+    <UserWrapper>
       <div>
-        {
-          users.length === 0 && <p>no friends</p>
-        }
-        {users.length > 0 && <List>
-          { users.map(user => <FriendItem key={user.id} {...user} actionCallback={friendCallback} alreadyFriends={friends.includes(user.id)} /> )}
-        </List>}
+        <Form userList={usersList} onSubmit={handleSubmit} pushNotify={pushNotify} currentUsername={currentUser.name} />
+        <div>
+          {
+            users.length === 0 && <p>no friends</p>
+          }
+          {users.length > 0 && <List>
+            { users.map(user => <FriendItem key={user.id} {...user} actionCallback={friendCallback} alreadyFriends={friends.includes(user.id)} /> )}
+          </List>}
+        </div>
       </div>
-    </div>
+    </UserWrapper>
   )
 }
-
-const List = styled.div`
-  display: flex;
-  flex-wrap: wrap;
-  
-`
