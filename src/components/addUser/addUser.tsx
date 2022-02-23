@@ -51,6 +51,7 @@ export const AddUser = (p:AddUserProps) => {
 
   return (
     <UserWrapper>
+      <p>{p.currentUser.id}</p>
       <Form userList={userNameList} onSubmit={handleSubmit} pushNotify={formErrorNotify} currentUsername={p.currentUser.name}/>
       {p.showRetry && <WrapperCenter><div><Button text="riprova" click={() => console.log('hello')}><RetryIcon /></Button></div></WrapperCenter>}
       {p.users.length === 0 && <WrapperCenter><div>No friends :(</div></WrapperCenter>}

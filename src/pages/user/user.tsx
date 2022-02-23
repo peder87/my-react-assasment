@@ -1,14 +1,10 @@
-import { useNavigate, useParams } from 'react-router-dom'
-import { AddContainer } from '../../components/addUser/container'
+import { useParams } from 'react-router-dom'
+import { ModalContainer } from '../../components/modalContainer/modalContainer'
 
 export const NewUser = () => {
   const { userId } = useParams<"userId">()
   
   return (<>
-    <AddContainer 
-      showBackHome={true}
-      userId={userId}
-      parentId={undefined}
-    />
+    <ModalContainer backHome={true} userId={userId} parentId={undefined} />
   </>)
 }

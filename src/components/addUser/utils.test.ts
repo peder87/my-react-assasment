@@ -24,7 +24,12 @@ describe('testing getCurrent User', () => {
   })
 
   it('should getCurrentUser retrieve the user', () => {
-    const result = getCurrentUser(users, 'ssl')
-    expect(result).toEqual({ id: 'ssl', name: 'sassaroli', friends: ['mln'] })
+    const result = getCurrentUser(users, 'mln', 'ssl')
+    expect(result).toEqual({ id: 'mln', name: 'melandri', friends: ['ssl'] })
+  })
+
+  it('should getCurrentUser with prefilled known firend', () => {
+    const { friends } = getCurrentUser(users, 'arc', 'grn')
+    expect(friends.length).toBe(0)
   })
 })
