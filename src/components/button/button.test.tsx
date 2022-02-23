@@ -1,33 +1,35 @@
 import { fireEvent, render,screen } from "@testing-library/react";
 import { ReactElement } from "react";
-import { withTheme } from "../../utils/withTheme";
 import { Button } from "./button";
+import { AddCircle }from '@styled-icons/fluentui-system-filled/AddCircle'
+import styled from "styled-components";
 
 describe('testing button', () => {
-  const Btn = withTheme(Button)
+  const FakeIcon = styled(AddCircle)``
   const fn = jest.fn()
   const setup = (ui:ReactElement) => {
-    render(ui)
-    return  screen.getByRole('button')
+    const {debug} = render(ui)
+    return {btn: screen.getByRole('button'), icon: screen.queryByTestId('icon'), debug}
   }
-
+  
   it('should render the button in the dom', () => {
-    const button = setup(<Btn text="click me please" click={fn} />)
-    expect(button).toBeInTheDocument()
-    expect(button).toHaveTextContent("click me please")
-    expect(button).not.toBeDisabled()
+    const {btn, icon} = setup(<Button text="click me please" click={fn} />)
+    expect(btn).toBeInTheDocument()
+    expect(btn).toHaveTextContent("click me please")
+    expect(icon).toBeNull()
+    expect(btn).not.toBeDisabled()
   });
   
-  it('should render trigger click props on click', () => {
-    const button = setup(<Btn text="click me please" click={fn} disabled={false} />)
-    fireEvent.click(button)
+  it('should render the icon in the dom', () => {
+    const { icon} = setup(<Button text="click me please" click={fn}><FakeIcon /></Button>)
+    expect(icon).toBeInTheDocument()
+  });
+  
+  
+  it('should trigger click props', () => {
+    const { btn} = setup(<Button text="click me please" click={fn}><FakeIcon /></Button>)
+    fireEvent.click(btn)
     expect(fn).toHaveBeenCalled()
   });
-  
-  it('should render a disabled component when disabled is passed', () => {
-    render(<Btn text="click me please" click={fn} disabled={true} />)
-    const button = screen.getByRole('button')
-    expect(button).toBeDisabled()
-  })
 
 });

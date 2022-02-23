@@ -33,9 +33,9 @@ export const FriendWrapper  = styled.div<WrapperProps>`
 
 export const AddBtn = styled(AddCircle)`
   color: #95CD41;
-  width: 2rem;
+  width: 1.5rem;
 ` 
 export const RemoveBtn = styled(SubtractCircle)`
   color: #EA5C2B;
-  width: 2rem;
+  width: 1.5rem;
 ` 

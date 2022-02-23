@@ -4,36 +4,31 @@ type ButtonProps = {
   text: string
   click: () => void
   disabled?:boolean
+  children?: React.ReactNode
 }
-
-const defaultProps = {
-  disabled: false
-}
-
 export function Button(props: ButtonProps) {
-  return (<StyledButton
-    disabled={props.disabled}
-    onClick={props.click}>{props.text}</StyledButton>)
+  return (<BtnWrapper onClick={props.click} role="button">
+    <span>{ props.text }</span>
+    {props.children && <div data-testid="icon">{props.children}</div>}
+  </BtnWrapper>)
 }
 
-Button.defaultProps = defaultProps
-
-interface StyledButtonProps {
-}
-
-const StyledButton = styled.button<StyledButtonProps>`
-  border: solid .2rem;
-  box-sizing: border-box;
-  border-color: ${props => props.theme.palette.primary.main};
-  padding: .5rem;
-  border-radius: .2rem;
-  color: ${props => props.theme.palette.common.white};
-  font-size: 1rem;
-  letter-spacing: .15rem;
-  background: ${props => props.theme.palette.primary.main};
-  transition: border-color .1s ease-out;
-  transition: background-color .3s ease-out;
-  &:hover {
-    cursor: 'pointer';
+export const BtnWrapper  = styled.div`
+  display: flex;
+  padding: .25rem;
+  background-color: #fff;
+  margin-bottom: .5rem;
+  align-items: center;
+  border-radius: 2rem;
+  box-shadow: 0 4px 10px 0 rgba(0,0,0,.2);
+  margin-left: .5rem;
+  cursor: pointer;
+  transition: background-color .15s ease-out;
+  & span {
+    padding-left: .5rem;
+    padding-right: .5rem;
+  };
+  &:first-child {
+    margin-left: 0;
   }
 `

@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import toast from 'react-hot-toast'
-import { useNavigate, useParams, useRoutes } from 'react-router-dom'
-import { List, UserWrapper } from './user.style'
+import { useNavigate, useParams } from 'react-router-dom'
+import { BackIcon, RetryIcon, UserWrapper } from './user.style'
 import { Form } from '../../components/form/form'
 import { FriendItem, FRIEND_ACTION } from '../../components/friendItem/friendItem'
 import { useAppSelector } from '../../reducers'
@@ -9,6 +9,8 @@ import { UsersState } from '../../reducers/users'
 import { getRandomIcon, NotifyType } from '../../utils/emoji'
 import { coinFlip, retryPromise } from '../../utils/fakeHttp'
 import { RouteEnum } from '../../routes/routes'
+import { ListWrapper, WrapperCenter } from '../../style/common'
+import { Button } from '../../components/button/button'
 
 
 export const getCurrentUser = (users:UsersState, id: string | undefined): { id?: string, name: string, friends: string[]} => {
@@ -33,25 +35,22 @@ export const NewUser = () => {
 
   const usersList = users.map(users => users.name)
   const handleSubmit = (name: string) => {
+    toast.loading('...',{id:'loading'})
     const data = { name, friends}
     const fx = () => {console.log('alegher', data)}
     const cf = coinFlip(fx)
-    const tp = retryPromise(cf,2)
+    retryPromise(cf,2)
       .then(() => {
-        navigate(RouteEnum.HOME)
+        // navigate(RouteEnum.HOME)
+        toast.remove('loading')
+        toast.success(`${name} aggiunto con sucesso`)
       })
       .catch(() => {
       setShowRetry(true)
+      toast.remove('loading')
+      toast.error('qualcosa è andato storto', {icon: getRandomIcon(NotifyType.ERROR),duration: 3000})
     })
-    toast.promise(tp,{
-      success: `${name} aggiunto con sucesso`,
-      error: 'qualcosa è andato storto',
-      loading: 'attendere prego'
-    },{
-      success: {icon: getRandomIcon(NotifyType.SUCCESS)},
-      error: {icon: getRandomIcon(NotifyType.ERROR),duration: 3000},
-    })
-
+    
   }
   const pushNotify = (name:string) => {
     toast.error(`"${name}" è già presente`, {icon: getRandomIcon(NotifyType.ERROR)})
@@ -72,18 +71,24 @@ export const NewUser = () => {
 
   return (
     <UserWrapper>
-      <div>
         <Form userList={usersList} onSubmit={handleSubmit} pushNotify={pushNotify} currentUsername={currentUser.name} />
-        {showRetry && <button>retry</button>}
-        <div>
+        {showRetry && <WrapperCenter>
+          <div><Button text="prova ancora" click={() => {console.log('prova ancora')}}><RetryIcon /></Button></div>
+        </WrapperCenter>}
           {
-            users.length === 0 && <p>no friends</p>
+            users.length === 0 && (<WrapperCenter><p>no friends</p></WrapperCenter>)
           }
-          {users.length > 0 && <List>
+          {users.length > 0 && <ListWrapper>
             { users.map(user => <FriendItem key={user.id} {...user} actionCallback={friendCallback} alreadyFriends={friends.includes(user.id)} /> )}
-          </List>}
-        </div>
-      </div>
+          </ListWrapper>}
+          
+        <WrapperCenter>
+          <div>
+            <Button text="torna alla lista degli amici" click={() => navigate(RouteEnum.HOME)}><BackIcon /></Button>
+          </div>
+
+        </WrapperCenter>
+
     </UserWrapper>
   )
 }
