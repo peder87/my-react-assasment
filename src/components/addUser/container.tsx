@@ -21,6 +21,7 @@ interface AddContainerPropos {
 
 export const AddContainer = (p: AddContainerPropos) => {
   const [maybeFriend, setMaybeFriend] = useState('')
+  const [showRetry, setShowRetry] = useState(false)
   const { users, currentUser, userDictionary } = useAppSelector(({users}) => {
     return {
       userDictionary: users,
@@ -28,7 +29,6 @@ export const AddContainer = (p: AddContainerPropos) => {
       currentUser: getCurrentUser(users,p.userId, p.parentId)
     }
   })
-  const [showRetry, setShowRetry] = useState(false)
 
   const addNotify = (obj:{id:string,action:FRIEND_ACTION}) => {
     const {id, action } = obj
