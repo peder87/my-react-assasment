@@ -41,7 +41,6 @@ export const NewUser = () => {
     const cf = coinFlip(fx)
     retryPromise(cf,2)
       .then(() => {
-        // navigate(RouteEnum.HOME)
         toast.remove('loading')
         toast.success(`${name} aggiunto con sucesso`)
       })
