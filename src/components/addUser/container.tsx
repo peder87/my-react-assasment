@@ -77,7 +77,6 @@ export const AddContainer = (p: AddContainerPropos) => {
 
   return (
     <>
-      <p>{p.parentId}</p>
       <AddUser
         showBackHome={p.showBackHome}
         showRetry={showRetry}
