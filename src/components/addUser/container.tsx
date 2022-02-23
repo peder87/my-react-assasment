@@ -3,7 +3,7 @@ import toast from 'react-hot-toast'
 import { useDispatch } from 'react-redux'
 import { addFriend, initUser, removeFriend } from '../../actions/temp'
 import { updateUserThunk } from '../../actions/thunk'
-import { User } from '../../actions/users'
+import { updateFriends, User } from '../../actions/users'
 import { useAppSelector } from '../../reducers'
 import { WrapperCenter } from '../../style/common'
 import { getRandomIcon, NotifyType } from '../../utils/emoji'
@@ -23,7 +23,6 @@ interface AddContainerPropos {
 
 export const AddContainer = (p: AddContainerPropos) => {
   const dispatch = useDispatch()
-  const [maybeFriend, setMaybeFriend] = useState('')
   const [showRetry, setShowRetry] = useState(false)
   const { users, currentUser, userDictionary } = useAppSelector(({users, temp}) => {
     return {
@@ -72,13 +71,13 @@ export const AddContainer = (p: AddContainerPropos) => {
 
   const addNewFriend = () => {
     const newUser = getCurrentUser(userDictionary, undefined, p.userId)
-    setMaybeFriend(newUser.id)
-    p.openDialog(newUser.id)
     dispatch(initUser(newUser))
+    dispatch(addFriend(currentUser.id,newUser.id))
   }
 
   return (
     <>
+      <p>{p.parentId}</p>
       <AddUser
         showBackHome={p.showBackHome}
         showRetry={showRetry}
