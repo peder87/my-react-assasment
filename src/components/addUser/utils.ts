@@ -4,7 +4,7 @@ import { v4 as uuidv4 } from 'uuid'
 
 export const getCurrentUser = (
   users: UsersState,
-  id: string | undefined,
+  id?: string | undefined,
   parentId?: string | undefined
 ): User => {
   const parentExists = parentId ? Object.keys(users).includes(parentId) : false

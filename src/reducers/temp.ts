@@ -36,6 +36,14 @@ export const tempReducers = (
           ),
         },
       }
+    case TempActionType.UPDATE_NAME:
+      return {
+        ...state,
+        [action.id]: {
+          ...state[action.id],
+          name: action.name,
+        },
+      }
     case TempActionType.INIT_REDUCER:
       return {}
     default:

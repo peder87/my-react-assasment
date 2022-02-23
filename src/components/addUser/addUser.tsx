@@ -1,4 +1,3 @@
-import { useState } from 'react'
 import Form from '../../components/form'
 import { BackIcon, RetryIcon, UserWrapper } from './addUser.style'
 import Button from '../../components/button'
@@ -10,7 +9,7 @@ import toast from 'react-hot-toast'
 import { useNavigate } from 'react-router-dom'
 import { RouteEnum } from '../../routes/routes'
 import { useDispatch } from 'react-redux'
-import {  initReducer } from '../../actions/temp'
+import {  initReducer, updateName } from '../../actions/temp'
 interface AddUserProps {
   showBackHome: boolean
   showRetry: boolean
@@ -24,7 +23,6 @@ export const AddUser = (p:AddUserProps) => {
   const navigate = useNavigate()
   const dispatch = useDispatch()
   const { friends } = p.currentUser
-  // const [friends, setFriends] = useState<string[]>(p.currentUser.friends)
   
   const handleSubmit = (name:string) => {
     // const updatedUser = {...p.currentUser, name, friends}
@@ -44,10 +42,14 @@ export const AddUser = (p:AddUserProps) => {
     p.manageFriends({id, action: alreadyFriends ? FRIEND_ACTION.REMOVE : FRIEND_ACTION.ADD})
   }
 
+  const updateNameValue = (name:string) => {
+    dispatch(updateName(p.currentUser.id,name))
+  }
+
   return (
     <UserWrapper>
       <p>{p.currentUser.id}</p>
-      <Form userList={userNameList} onSubmit={handleSubmit} pushNotify={formErrorNotify} currentUsername={p.currentUser.name}/>
+      <Form userList={userNameList} onSubmit={handleSubmit} pushNotify={formErrorNotify} currentUsername={p.currentUser.name} updateName={updateNameValue}/>
       {p.showRetry && <WrapperCenter><div><Button text="riprova" click={() => console.log('hello')}><RetryIcon /></Button></div></WrapperCenter>}
       {p.users.length === 0 && <WrapperCenter><div>No friends :(</div></WrapperCenter>}
       {p.users.length > 0 && 

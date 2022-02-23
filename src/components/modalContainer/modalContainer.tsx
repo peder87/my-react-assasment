@@ -1,7 +1,8 @@
 import { useState } from "react"
-import { Dialog, DialogOverlay, DialogContent } from "@reach/dialog";
+import { Dialog } from "@reach/dialog";
 import "@reach/dialog/styles.css";
 import { AddContainer } from "../addUser/container";
+import { Confirm } from "../confirm/confirm";
 
 interface ModalContainerProps {
   backHome: boolean
@@ -11,12 +12,21 @@ interface ModalContainerProps {
 
 export const ModalContainer = (p:ModalContainerProps) => {
   const [modalId, setModalId] = useState<string>('')
+  const [showConfirm, setShowConfirm] = useState(false)
+  
   const open = (parentId:string) => {
     setModalId(parentId)
   }
-  const closeDialog = () => {
+
+  const closeAll = () => {
     setModalId('')
+    setShowConfirm(false)
   }
+
+  const closeDialog = () => {
+    setShowConfirm(true)
+  }
+  
   return (
     <>
       <AddContainer
@@ -25,15 +35,14 @@ export const ModalContainer = (p:ModalContainerProps) => {
         parentId={p.parentId}
         openDialog={open}
       />
-      {
-      <Dialog isOpen={modalId !== ''} onDismiss={closeDialog}>
-        <ModalContainer
+      <Dialog isOpen={modalId !== ''} onDismiss={closeDialog} style={{width:'70vw', height: '70vh'}} aria-label="dialog">
+        {!showConfirm ? <ModalContainer
           userId={modalId}
           parentId={p.userId}
           backHome={false}
-        />
+          /> : <Confirm currentId={modalId} dismissAlert={closeAll}/>
+         }
       </Dialog>
-      }
     </>
   )
 } 

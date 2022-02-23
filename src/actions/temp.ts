@@ -1,5 +1,3 @@
-import { v4 } from 'uuid'
-
 export interface TempUser {
   name: string
   id: string
@@ -11,6 +9,7 @@ export enum TempActionType {
   INIT_USER = 'INIT_USER',
   REMOVE_FRIEND = 'REMOVE_FRIEND',
   ADD_FRIEND = 'ADD_FRIEND',
+  UPDATE_NAME = 'UPDATE_NAME',
 }
 
 interface InitUser {
@@ -55,6 +54,20 @@ export const addFriend = (id: string, idToAdd: string): AddFriend => {
   }
 }
 
+interface UpdateName {
+  type: TempActionType.UPDATE_NAME
+  id: string
+  name: string
+}
+
+export const updateName = (id: string, name: string): UpdateName => {
+  return {
+    type: TempActionType.UPDATE_NAME,
+    id,
+    name,
+  }
+}
+
 interface InitReducer {
   type: TempActionType.INIT_REDUCER
 }
@@ -63,4 +76,9 @@ export const initReducer = (): InitReducer => ({
   type: TempActionType.INIT_REDUCER,
 })
 
-export type TempActions = InitUser | RemoveFriend | AddFriend | InitReducer
+export type TempActions =
+  | InitUser
+  | RemoveFriend
+  | AddFriend
+  | InitReducer
+  | UpdateName

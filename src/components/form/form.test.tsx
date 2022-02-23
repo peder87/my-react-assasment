@@ -14,6 +14,7 @@ describe('testing form', () => {
     currentUsername: '',
     onSubmit: jest.fn(),
     pushNotify: jest.fn(),
+    updateName: jest.fn(),
     userList: []
   }
 

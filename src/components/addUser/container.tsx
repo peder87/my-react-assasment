@@ -1,8 +1,7 @@
 import { useState } from 'react'
 import toast from 'react-hot-toast'
 import { useDispatch } from 'react-redux'
-import { v4 } from 'uuid'
-import { addFriend, removeFriend } from '../../actions/temp'
+import { addFriend, initUser, removeFriend } from '../../actions/temp'
 import { User } from '../../actions/users'
 import { useAppSelector } from '../../reducers'
 import { WrapperCenter } from '../../style/common'
@@ -11,6 +10,7 @@ import { coinFlip, retryPromise } from '../../utils/fakeHttp'
 import Button from '../button'
 import { FRIEND_ACTION } from '../friendItem/friendItem'
 import { AddUser } from './addUser'
+import { getCurrentUser } from './utils'
 
 
 interface AddContainerPropos {
@@ -71,10 +71,10 @@ export const AddContainer = (p: AddContainerPropos) => {
   }
 
   const addNewFriend = () => {
-    const newUserId = v4()
-    setMaybeFriend(newUserId)
-    p.openDialog(newUserId)
-    console.log('new parent',currentUser.id)
+    const newUser = getCurrentUser(userDictionary, undefined, p.userId)
+    setMaybeFriend(newUser.id)
+    p.openDialog(newUser.id)
+    dispatch(initUser(newUser))
   }
 
   return (
