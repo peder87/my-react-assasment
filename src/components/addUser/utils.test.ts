@@ -1,4 +1,4 @@
-import { getCurrentUser } from "./user";
+import { getCurrentUser } from './utils'
 
 describe('testing getCurrent User', () => {
   const users = {
@@ -10,18 +10,21 @@ describe('testing getCurrent User', () => {
     ssl: { id: 'ssl', name: 'sassaroli', friends: ['mln'] },
   }
   it('should getCurrentUser return a new user', () => {
-    const result = getCurrentUser(users,'grn')
-    expect(result).toEqual({name: '', friends: []})
-  });
+    const { name, id, friends } = getCurrentUser(users, 'grn')
+    expect(name).toEqual('')
+    expect(friends).toEqual([])
+    expect(typeof id === 'string').toBeTruthy()
+  })
 
   it('should getCurrentUser return a new user if Id is undefined', () => {
-    const result = getCurrentUser(users, undefined)
-    expect(result).toEqual({name: '', friends: []})
-  });
+    const { name, id, friends } = getCurrentUser(users, undefined)
+    expect(name).toEqual('')
+    expect(friends).toEqual([])
+    expect(typeof id === 'string').toBeTruthy()
+  })
 
   it('should getCurrentUser retrieve the user', () => {
-    const result = getCurrentUser(users,'ssl')
+    const result = getCurrentUser(users, 'ssl')
     expect(result).toEqual({ id: 'ssl', name: 'sassaroli', friends: ['mln'] })
-  });
-  
-});
+  })
+})

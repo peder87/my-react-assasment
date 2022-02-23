@@ -52,7 +52,7 @@ export const AddContainer = (p: AddContainerPropos) => {
 
   return (
       <AddUser
-        showBackHome={true}
+        showBackHome={p.showBackHome}
         showRetry={showRetry}
         currentUser={currentUser}
         users={users}

@@ -7,6 +7,8 @@ import { FriendItem, FRIEND_ACTION } from '../friendItem/friendItem'
 import { ListWrapper, WrapperCenter } from '../../style/common'
 import { getRandomIcon, NotifyType } from '../../utils/emoji'
 import toast from 'react-hot-toast'
+import { useNavigate } from 'react-router-dom'
+import { RouteEnum } from '../../routes/routes'
 
 interface AddUserProps {
   showBackHome: boolean
@@ -18,6 +20,7 @@ interface AddUserProps {
 }
 
 export const AddUser = (p:AddUserProps) => {
+  const navigate = useNavigate()
   const [friends, setFriends] = useState<string[]>(p.currentUser.friends)
   
   const handleSubmit = (name:string) => {
@@ -42,6 +45,10 @@ export const AddUser = (p:AddUserProps) => {
     p.addNotify(obj)
   }
 
+  const goHome = () => {
+    navigate(RouteEnum.HOME)
+  }
+
   return (
     <UserWrapper>
       <Form userList={userNameList} onSubmit={handleSubmit} pushNotify={formErrorNotify} currentUsername={p.currentUser.name}/>
@@ -54,8 +61,7 @@ export const AddUser = (p:AddUserProps) => {
       }
 
       <WrapperCenter>
-        {p.showBackHome && <div><Button text="torna alla lista" click={() => console.log('hello')}><BackIcon /></Button></div>}
-        {p.showBackHome && <div><Button text="torna alla lista" click={() => console.log('hello')}><BackIcon /></Button></div>}
+        {p.showBackHome && <div><Button text="torna alla lista" click={goHome}><BackIcon /></Button></div>}
       </WrapperCenter>
     </UserWrapper>
   )

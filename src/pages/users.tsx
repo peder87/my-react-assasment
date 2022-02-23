@@ -9,7 +9,7 @@ export function Users() {
   const navigate = useNavigate()
 
   const goTo = (id:string) => {
-    navigate(`${RouteEnum.USER}/id`)
+    navigate(`${RouteEnum.USER}/${id}`)
   }
 
   return (
