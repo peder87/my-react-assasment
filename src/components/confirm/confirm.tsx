@@ -20,8 +20,8 @@ export const Confirm = (p:ConfirmProps) => {
           <p>per salvare devi almeno inserire il nome</p>
         </div>}
         <div>
-        <Button text="cancella" click={p.dismissAlert} />
-        {hasName && <Button text="salva" click={p.dismissAlert} />}
+        <Button text="cancella" click={p.abort} />
+        {hasName && <Button text="salva" click={()=> p.save(data)} />}
         <Button text="continua a modificare" click={p.dismissAlert} />
         </div>
       </WrapperCenter>

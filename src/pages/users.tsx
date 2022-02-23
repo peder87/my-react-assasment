@@ -38,9 +38,9 @@ export function Users() {
       <div>
 
       { userList.length > 0 &&
-      <ListWrapper>
-        {userList.map((user) => <Button key={user.id} text={user.name} click={() => goTo(user.id)} ><UserIcon /></Button>)}
-      </ListWrapper>
+        <ListWrapper>
+          {userList.map((user) => <Button key={user.id} text={user.name} click={() => goTo(user.id)} ><UserIcon /></Button>)}
+        </ListWrapper>
       }
       </div>
     </div>

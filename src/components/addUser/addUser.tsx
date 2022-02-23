@@ -15,7 +15,7 @@ interface AddUserProps {
   showRetry: boolean
   currentUser: User
   users: User[]
-  onSubmit: (newUser:User) => void
+  onSubmit: () => void
   manageFriends: (obj:{id:string,action:FRIEND_ACTION}) => void
 }
 
@@ -24,10 +24,6 @@ export const AddUser = (p:AddUserProps) => {
   const dispatch = useDispatch()
   const { friends } = p.currentUser
   
-  const handleSubmit = (name:string) => {
-    // const updatedUser = {...p.currentUser, name, friends}
-    // p.onSubmit(updatedUser)
-  }
   const userNameList = p.users.map((u:User) => u.name)
   const formErrorNotify = (name:string) => {
     toast(`${name} esiste già`, {icon: getRandomIcon(NotifyType.ERROR)})
@@ -48,13 +44,14 @@ export const AddUser = (p:AddUserProps) => {
 
   return (
     <UserWrapper>
-      <p>{p.currentUser.id}</p>
-      <Form userList={userNameList} onSubmit={handleSubmit} pushNotify={formErrorNotify} currentUsername={p.currentUser.name} updateName={updateNameValue}/>
+      <Form userList={userNameList} onSubmit={p.onSubmit} pushNotify={formErrorNotify} currentUsername={p.currentUser.name} updateName={updateNameValue}/>
       {p.showRetry && <WrapperCenter><div><Button text="riprova" click={() => console.log('hello')}><RetryIcon /></Button></div></WrapperCenter>}
       {p.users.length === 0 && <WrapperCenter><div>No friends :(</div></WrapperCenter>}
       {p.users.length > 0 && 
         <ListWrapper>
-          {p.users.map(user => {
+          {p.users
+          .filter(user => user.id !== p.currentUser.id)
+          .map(user => {
               const alreadyFriends = friends.includes(user.id)
               
               return <FriendItem key={user.id} {...user} actionCallback={() => handleFriendClick(user.id,alreadyFriends)} alreadyFriends={alreadyFriends}/>

@@ -4,6 +4,8 @@ import "@reach/dialog/styles.css";
 import { AddContainer } from "../addUser/container";
 import { Confirm } from "../confirm/confirm";
 import { TempUser } from "../../actions/temp";
+import { useDispatch } from "react-redux";
+import { updateUserThunk } from "../../actions/thunk";
 
 interface ModalContainerProps {
   backHome: boolean
@@ -12,7 +14,8 @@ interface ModalContainerProps {
 }
 
 export const ModalContainer = (p:ModalContainerProps) => {
-  const [modalId, setModalId] = useState<string>('')
+  const dispatch = useDispatch()
+  const [modalId, setModalId] = useState('')
   const [showConfirm, setShowConfirm] = useState(false)
   
   const open = (parentId:string) => {
@@ -29,7 +32,7 @@ export const ModalContainer = (p:ModalContainerProps) => {
   }
 
   const save = (user: TempUser) => {
-    console.log(user)
+    dispatch(updateUserThunk(user))
   }
 
   const closeAlert = () => setShowConfirm(false)

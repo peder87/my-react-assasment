@@ -2,6 +2,7 @@ import { useState } from 'react'
 import toast from 'react-hot-toast'
 import { useDispatch } from 'react-redux'
 import { addFriend, initUser, removeFriend } from '../../actions/temp'
+import { updateUserThunk } from '../../actions/thunk'
 import { User } from '../../actions/users'
 import { useAppSelector } from '../../reducers'
 import { WrapperCenter } from '../../style/common'
@@ -53,15 +54,14 @@ export const AddContainer = (p: AddContainerPropos) => {
     toast(message, {icon})
   }
 
-  const onSubmit = (user: User) => {
-    const newUser = {...user, friends: [...user.friends, ...(p.parentId ? [p.parentId]: [])]} 
+  const onSubmit = () => {
     toast.loading('...',{id:'loading'})
-    const fx = () => {console.log('alegher', newUser)}
+    const fx = () => { dispatch(updateUserThunk(currentUser))}
     const cf = coinFlip(fx)
     retryPromise(cf,2)
       .then(() => {
         toast.remove('loading')
-        toast.success(`${newUser.name} aggiunto con sucesso`)
+        toast.success(`${currentUser.name} aggiunto con sucesso`)
       })
       .catch(() => {
       setShowRetry(true)
@@ -79,7 +79,6 @@ export const AddContainer = (p: AddContainerPropos) => {
 
   return (
     <>
-      <p>{p.parentId}</p>
       <AddUser
         showBackHome={p.showBackHome}
         showRetry={showRetry}
@@ -93,7 +92,6 @@ export const AddContainer = (p: AddContainerPropos) => {
           <Button text="new friend" click={addNewFriend}/>
         </div>
       </WrapperCenter>
-      <p>temp friend: { maybeFriend }</p>
     </>
   )
 }
