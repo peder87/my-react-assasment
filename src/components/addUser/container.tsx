@@ -1,6 +1,8 @@
 import { useState } from 'react'
 import toast from 'react-hot-toast'
+import { useDispatch } from 'react-redux'
 import { v4 } from 'uuid'
+import { addFriend, removeFriend } from '../../actions/temp'
 import { User } from '../../actions/users'
 import { useAppSelector } from '../../reducers'
 import { WrapperCenter } from '../../style/common'
@@ -9,26 +11,39 @@ import { coinFlip, retryPromise } from '../../utils/fakeHttp'
 import Button from '../button'
 import { FRIEND_ACTION } from '../friendItem/friendItem'
 import { AddUser } from './addUser'
-import { getCurrentUser } from './utils'
 
 
 interface AddContainerPropos {
   showBackHome: boolean
-  userId: string | undefined
+  userId: string
   parentId: string | undefined
   openDialog:(userId:string) => void
 }
 
 export const AddContainer = (p: AddContainerPropos) => {
+  const dispatch = useDispatch()
   const [maybeFriend, setMaybeFriend] = useState('')
   const [showRetry, setShowRetry] = useState(false)
-  const { users, currentUser, userDictionary } = useAppSelector(({users}) => {
+  const { users, currentUser, userDictionary } = useAppSelector(({users, temp}) => {
     return {
       userDictionary: users,
       users: Object.values(users),
-      currentUser: getCurrentUser(users,p.userId, p.parentId)
+      currentUser: temp[p.userId],
     }
   })
+  
+  const handleAddRemoveFriends = (obj:{id:string,action:FRIEND_ACTION}) => {
+    const { action, id } = obj 
+    switch (action) {
+      case FRIEND_ACTION.ADD:
+        dispatch(addFriend(currentUser.id,id))
+        break;
+      case FRIEND_ACTION.REMOVE:
+        dispatch(removeFriend(currentUser.id,id))
+        break
+    }
+    addNotify(obj)
+  }
 
   const addNotify = (obj:{id:string,action:FRIEND_ACTION}) => {
     const {id, action } = obj
@@ -71,7 +86,7 @@ export const AddContainer = (p: AddContainerPropos) => {
         currentUser={currentUser}
         users={users}
         onSubmit={onSubmit}
-        addNotify={addNotify}
+        manageFriends={handleAddRemoveFriends}
       />
       <WrapperCenter>
         <div>

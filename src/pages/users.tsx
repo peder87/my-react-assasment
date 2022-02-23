@@ -3,13 +3,24 @@ import { RouteEnum } from '../routes/routes'
 import { Button } from '../components/button/button'
 import { RootState, useAppSelector } from '../reducers'
 import { AddPerson, ListWrapper, UserIcon, WrapperCenter } from '../style/common'
+import { useDispatch } from 'react-redux'
+import { getCurrentUser } from '../components/addUser/utils'
+import { initUser } from '../actions/temp'
 
 export function Users() {
-  const users = useAppSelector(({users}:RootState) => Object.values(users))
+  const dispatch = useDispatch()
+  const { userList, userState } = useAppSelector(({users}:RootState) => {
+    return { 
+      userState: users,
+      userList: Object.values(users)
+    }
+  })
   const navigate = useNavigate()
 
-  const goTo = (id:string) => {
-    navigate(`${RouteEnum.USER}/${id}`)
+  const goTo = (id?:string) => {
+    const data = getCurrentUser(userState,id)
+    dispatch(initUser(data))
+    navigate(id ? `${RouteEnum.USER}/${id}` : `${RouteEnum.USER}/${data.id}`)
   }
 
   return (
@@ -17,18 +28,18 @@ export function Users() {
       <WrapperCenter>
         <div>
           <Button
-            click={() => navigate(RouteEnum.NEW_USERS)} 
+            click={() => goTo()} 
             text="create new user">
             <AddPerson/>
           </Button>
         </div>
       </WrapperCenter>
-        { users.length === 0 && <WrapperCenter><p>no users :(</p></WrapperCenter>}
+        { userList.length === 0 && <WrapperCenter><p>no users :(</p></WrapperCenter>}
       <div>
 
-      { users.length > 0 &&
+      { userList.length > 0 &&
       <ListWrapper>
-        {users.map((user) => <Button key={user.id} text={user.name} click={() => goTo(user.id)} ><UserIcon /></Button>)}
+        {userList.map((user) => <Button key={user.id} text={user.name} click={() => goTo(user.id)} ><UserIcon /></Button>)}
       </ListWrapper>
       }
       </div>

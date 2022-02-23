@@ -5,6 +5,6 @@ export const NewUser = () => {
   const { userId } = useParams<"userId">()
   
   return (<>
-    <ModalContainer backHome={true} userId={userId} parentId={undefined} />
+    {userId && <ModalContainer backHome={true} userId={userId} parentId={undefined} />}
   </>)
 }

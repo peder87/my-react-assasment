@@ -5,7 +5,7 @@ import { AddContainer } from "../addUser/container";
 
 interface ModalContainerProps {
   backHome: boolean
-  userId: string|undefined
+  userId: string
   parentId: string|undefined
 }
 
