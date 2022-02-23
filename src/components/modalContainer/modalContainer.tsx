@@ -3,6 +3,7 @@ import { Dialog } from "@reach/dialog";
 import "@reach/dialog/styles.css";
 import { AddContainer } from "../addUser/container";
 import { Confirm } from "../confirm/confirm";
+import { TempUser } from "../../actions/temp";
 
 interface ModalContainerProps {
   backHome: boolean
@@ -26,6 +27,12 @@ export const ModalContainer = (p:ModalContainerProps) => {
   const closeDialog = () => {
     setShowConfirm(true)
   }
+
+  const save = (user: TempUser) => {
+    console.log(user)
+  }
+
+  const closeAlert = () => setShowConfirm(false)
   
   return (
     <>
@@ -40,7 +47,7 @@ export const ModalContainer = (p:ModalContainerProps) => {
           userId={modalId}
           parentId={p.userId}
           backHome={false}
-          /> : <Confirm currentId={modalId} dismissAlert={closeAll}/>
+          /> : <Confirm currentId={modalId} dismissAlert={closeAlert} abort={closeAll} save={save}/>
          }
       </Dialog>
     </>
