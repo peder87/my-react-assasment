@@ -3,7 +3,6 @@ import toast from 'react-hot-toast'
 import { useDispatch } from 'react-redux'
 import { addFriend, initUser, removeFriend } from '../../actions/temp'
 import { updateUserThunk } from '../../actions/thunk'
-import { updateFriends, User } from '../../actions/users'
 import { useAppSelector } from '../../reducers'
 import { WrapperCenter } from '../../style/common'
 import { getRandomIcon, NotifyType } from '../../utils/emoji'
@@ -73,6 +72,7 @@ export const AddContainer = (p: AddContainerPropos) => {
     const newUser = getCurrentUser(userDictionary, undefined, p.userId)
     dispatch(initUser(newUser))
     dispatch(addFriend(currentUser.id,newUser.id))
+    p.openDialog(newUser.id)
   }
 
   return (

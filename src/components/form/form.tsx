@@ -5,6 +5,7 @@ import { FormWrapper } from "./form.style"
 interface FormProps {
   currentUsername: string
   userList: string[]
+  disabled: boolean
   onSubmit: () => void
   updateName: (name:string) => void
   pushNotify: (name:string) => void
@@ -35,7 +36,7 @@ export const Form = (p: FormProps) => {
     <form onSubmit={handleButtonClick} data-testid="form">
       <fieldset>
         <input  type="text" data-testid="input" onChange={e => updateValue(e.target.value)} value={inputValue} placeholder="inserisci un nome utente" />
-        <button type="submit" data-testid="submit" disabled={inputValue === ''}>salva</button>
+        <button type="submit" data-testid="submit" disabled={inputValue === '' || p.disabled}>salva</button>
       </fieldset>
     </form>
   </FormWrapper>

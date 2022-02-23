@@ -45,7 +45,6 @@ export function updateUserAndFriends(
 
 export function updateUserThunk(user: User) {
   return async function (dispatch: Dispatch, getState: () => RootState) {
-    debugger
     const { users } = getState()
     const olFriends = Object.keys(users).includes(user.id)
       ? users[user.id].friends

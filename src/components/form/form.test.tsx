@@ -15,6 +15,7 @@ describe('testing form', () => {
     onSubmit: jest.fn(),
     pushNotify: jest.fn(),
     updateName: jest.fn(),
+    disabled: false,
     userList: []
   }
 
@@ -71,6 +72,11 @@ describe('testing form', () => {
     fireEvent.submit(form)
     expect(props.pushNotify).toHaveBeenCalledWith('birillo')
     expect(input).toHaveValue('')
+  })
+  
+  it('button should be disabled', () => {
+    const { btn } = setup(<MyForm {...props} disabled={true} currentUsername="" userList={['birillo']} />)
+    expect(btn).toBeDisabled()
   })
 
 });

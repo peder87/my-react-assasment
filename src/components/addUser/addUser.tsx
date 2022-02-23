@@ -44,8 +44,8 @@ export const AddUser = (p:AddUserProps) => {
 
   return (
     <UserWrapper>
-      <Form userList={userNameList} onSubmit={p.onSubmit} pushNotify={formErrorNotify} currentUsername={p.currentUser.name} updateName={updateNameValue}/>
-      {p.showRetry && <WrapperCenter><div><Button text="riprova" click={() => console.log('hello')}><RetryIcon /></Button></div></WrapperCenter>}
+      <Form userList={userNameList} onSubmit={p.onSubmit} pushNotify={formErrorNotify} currentUsername={p.currentUser.name} updateName={updateNameValue} disabled={p.showRetry}/>
+      {p.showRetry && <WrapperCenter><div><Button text="riprova" click={p.onSubmit}><RetryIcon /></Button></div></WrapperCenter>}
       {p.users.length === 0 && <WrapperCenter><div>No friends :(</div></WrapperCenter>}
       {p.users.length > 0 && 
         <ListWrapper>
