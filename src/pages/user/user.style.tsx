@@ -16,11 +16,11 @@ export const List = styled.div`
 export const BackIcon = styled(HomePerson)`
   width: 1.6rem;
   padding-right: .2rem;
-  color: ${p => p.theme.palette.primary.main}
+  color: ${p => p.theme.palette.primary.main};
 `
 
 export const RetryIcon = styled(ArrowClockwise)`
   width: 1.6rem;
   padding-right: .2rem;
-  color: ${p => p.theme.palette.primary.main}
+  color: ${p => p.theme.palette.primary.main};
 `
