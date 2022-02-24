@@ -18,6 +18,7 @@ interface AddContainerPropos {
   userId: string
   parentId: string | undefined
   openDialog:(userId:string) => void
+  closeDialog:() => void
 }
 
 export const AddContainer = (p: AddContainerPropos) => {
@@ -60,6 +61,7 @@ export const AddContainer = (p: AddContainerPropos) => {
       .then(() => {
         toast.remove('loading')
         toast.success(`${currentUser.name} aggiunto con sucesso`)
+        p.closeDialog()
       })
       .catch(() => {
       setShowRetry(true)

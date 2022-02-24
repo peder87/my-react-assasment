@@ -17,7 +17,9 @@ export function updateUserAndFriends(
   currentUser: User,
   userState: UsersState
 ): UsersState {
-  const oldUserFriends = userState[currentUser.id].friends
+  const oldUserFriends = Object.keys(userState).includes(currentUser.id)
+    ? userState[currentUser.id].friends
+    : []
   const newRelations = diffFriends(currentUser.friends, oldUserFriends)
   const brokenRelations = diffFriends(oldUserFriends, currentUser.friends)
   const brokenUpdate = brokenRelations.reduce((acc, friendId) => {

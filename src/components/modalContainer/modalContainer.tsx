@@ -11,6 +11,7 @@ interface ModalContainerProps {
   backHome: boolean
   userId: string
   parentId: string|undefined
+  closeDialog:() => void
 }
 
 export const ModalContainer = (p:ModalContainerProps) => {
@@ -24,7 +25,6 @@ export const ModalContainer = (p:ModalContainerProps) => {
 
   const closeAll = () => {
     setModalId('')
-    setShowConfirm(false)
   }
 
   const closeDialog = () => {
@@ -33,10 +33,10 @@ export const ModalContainer = (p:ModalContainerProps) => {
 
   const save = (user: TempUser) => {
     dispatch(updateUserThunk(user))
+    closeAll()
   }
 
   const closeAlert = () => setShowConfirm(false)
-  
   return (
     <>
       <AddContainer
@@ -44,12 +44,14 @@ export const ModalContainer = (p:ModalContainerProps) => {
         userId={p.userId}
         parentId={p.parentId}
         openDialog={open}
+        closeDialog={p.closeDialog}
       />
       <Dialog isOpen={modalId !== ''} onDismiss={closeDialog} style={{width:'70vw', height: '70vh'}} aria-label="dialog">
         {!showConfirm ? <ModalContainer
           userId={modalId}
           parentId={p.userId}
           backHome={false}
+          closeDialog={closeAll}
           /> : <Confirm currentId={modalId} dismissAlert={closeAlert} abort={closeAll} save={save}/>
          }
       </Dialog>
