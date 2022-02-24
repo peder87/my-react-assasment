@@ -18,7 +18,7 @@
 ## Ready to play
 Friends are prefilled with characters of "Amici miei"
 
-![Alt Text](http://giffetteria.it/archivio/amicimiei01.gif)
+![Alt Text](https://www.cinemabianchini.it/wp-content/uploads/2019/05/amici-miei-locandina-originale-215968.jpg)
 
 Have fun! 😃
 
