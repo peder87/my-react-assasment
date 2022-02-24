@@ -34,6 +34,16 @@ export const AddUser = (p:AddUserProps) => {
     dispatch(initReducer())
   }
 
+  const alreadyExist = () => {
+    const found = p.users.find(u => u.name === p.currentUser.name)
+    if(!found) return false
+    return found.id !== p.currentUser.id
+  }
+  
+  const submit = () => {
+    alreadyExist() ? formErrorNotify(p.currentUser.name) : p.onSubmit() 
+  }
+
   const handleFriendClick = (id:string,alreadyFriends: boolean) => {
     p.manageFriends({id, action: alreadyFriends ? FRIEND_ACTION.REMOVE : FRIEND_ACTION.ADD})
   }
@@ -44,8 +54,8 @@ export const AddUser = (p:AddUserProps) => {
 
   return (
     <UserWrapper>
-      <Form userList={userNameList} onSubmit={p.onSubmit} pushNotify={formErrorNotify} currentUsername={p.currentUser.name} updateName={updateNameValue} disabled={p.showRetry}/>
-      {p.showRetry && <WrapperCenter><div><Button text="riprova" click={p.onSubmit}><RetryIcon /></Button></div></WrapperCenter>}
+      <Form userList={userNameList} onSubmit={submit} pushNotify={formErrorNotify} currentUsername={p.currentUser.name} updateName={updateNameValue} disabled={p.showRetry}/>
+      {p.showRetry && <WrapperCenter><div><Button text="riprova" click={submit}><RetryIcon /></Button></div></WrapperCenter>}
       {p.users.length === 0 && <WrapperCenter><div>No friends :(</div></WrapperCenter>}
       {p.users.length > 0 && 
         <ListWrapper>
