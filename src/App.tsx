@@ -5,6 +5,7 @@ import { GlobalStyle } from './style/globalStyle';
 import { Toaster } from 'react-hot-toast'
 import { theme } from './style/theme';
 import { routes } from './routes/routes';
+import { ProtectedRoutes } from './routes/protectedRoute';
 
 
 function App() {
@@ -16,11 +17,19 @@ function App() {
       <ThemeProvider theme={theme}>
         <Routes>
           {
-            routes.map(({Component,...rest}) => <Route key={rest.path} {...rest} element={<Component />} />)
+            routes.map(({Component,...rest}) => rest.private ? 
+              <Route 
+                key={rest.path} 
+                element={
+                  <ProtectedRoutes>
+                    <Component />
+                  </ProtectedRoutes>
+                  }
+                {...rest} 
+              /> 
+              : 
+              <Route key={rest.path} {...rest} element={<Component />} />)
           }
-          {/* <Route path={RouteEnum.NEW_USERS} element={<NewUser />} />
-          <Route path="user/:userId"  element={<UserDetail />} />
-          <Route path={RouteEnum.HOME} element={<Users />} /> */}
         </Routes>
       </ThemeProvider>
     </>
