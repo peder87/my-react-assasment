@@ -27,18 +27,12 @@ describe('friendItem', () => {
   it('should click shoud trigger action REMOVE', () => {
     const { btn } = setup(<FriendItem {...props} />)
     fireEvent.click(btn)
-    expect(props.actionCallback).toBeCalledWith({
-      id: props.id,
-      action: FRIEND_ACTION.REMOVE,
-    })
+    expect(props.actionCallback).toBeCalled()
   })
 
   it('should click shoud trigger action ADD', () => {
     const { btn } = setup(<FriendItem {...props} alreadyFriends={false} />)
     fireEvent.click(btn)
-    expect(props.actionCallback).toBeCalledWith({
-      id: props.id,
-      action: FRIEND_ACTION.ADD,
-    })
+    expect(props.actionCallback).toBeCalled()
   })
 })
