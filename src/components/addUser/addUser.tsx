@@ -15,8 +15,14 @@ interface AddUserProps {
   showRetry: boolean
   currentUser: User
   users: User[]
-  onSubmit: () => void
+  onSubmit: (status: INSERT_STATUS) => void
   manageFriends: (obj:{id:string,action:FRIEND_ACTION}) => void
+}
+
+export enum INSERT_STATUS {
+  NEW = 'NEW',
+  EDIT = 'EDIT',
+  DUP = 'DUP'
 }
 
 export const AddUser = (p:AddUserProps) => {
@@ -34,14 +40,25 @@ export const AddUser = (p:AddUserProps) => {
     dispatch(initReducer())
   }
 
-  const alreadyExist = () => {
+  const alreadyExist = (): INSERT_STATUS  => {
     const found = p.users.find(u => u.name === p.currentUser.name)
-    if(!found) return false
-    return found.id !== p.currentUser.id
+    if(found) {
+      return found.id !== p.currentUser.id ? INSERT_STATUS.DUP : INSERT_STATUS.EDIT
+    }
+    return INSERT_STATUS.NEW
   }
   
   const submit = () => {
-    alreadyExist() ? formErrorNotify(p.currentUser.name) : p.onSubmit() 
+    const exist = alreadyExist()
+    switch (exist) {
+      case INSERT_STATUS.NEW:
+      case INSERT_STATUS.EDIT:
+        p.onSubmit(exist) 
+        break;
+      default:
+        formErrorNotify(p.currentUser.name)
+        break;
+    }
   }
 
   const handleFriendClick = (id:string,alreadyFriends: boolean) => {

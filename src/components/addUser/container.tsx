@@ -9,7 +9,7 @@ import { getRandomIcon, NotifyType } from '../../utils/emoji'
 import { coinFlip, retryPromise } from '../../utils/fakeHttp'
 import Button from '../button'
 import { FRIEND_ACTION } from '../friendItem/friendItem'
-import { AddUser } from './addUser'
+import { AddUser, INSERT_STATUS } from './addUser'
 import { getCurrentUser } from './utils'
 
 
@@ -53,18 +53,19 @@ export const AddContainer = (p: AddContainerPropos) => {
     toast(message, {icon})
   }
 
-  const onSubmit = () => {
+  const onSubmit = (status: INSERT_STATUS) => {
     toast.loading('...',{id:'loading'})
     const fx = () => { dispatch(updateUserThunk(currentUser))}
     const cf = coinFlip(fx)
-    retryPromise(cf,2)
+    const maxAttempt = status === INSERT_STATUS.NEW ? 2 : 1
+    retryPromise(cf,maxAttempt)
       .then(() => {
         toast.remove('loading')
         toast.success(`${currentUser.name} aggiunto con sucesso`)
         p.closeDialog()
       })
       .catch(() => {
-      setShowRetry(true)
+      status === INSERT_STATUS.NEW && setShowRetry(true)
       toast.remove('loading')
       toast.error('qualcosa è andato storto', {icon: getRandomIcon(NotifyType.ERROR),duration: 3000})
     })

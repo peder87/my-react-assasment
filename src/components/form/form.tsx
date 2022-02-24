@@ -24,11 +24,6 @@ export const Form = (p: FormProps) => {
 
   const handleButtonClick = (e:React.SyntheticEvent) => {
     e.preventDefault()
-    // if(p.userList.includes(inputValue)) {
-    //   p.pushNotify(inputValue)
-    //   setInputValue('')
-    //   return
-    // }
     p.onSubmit()
   }
 
