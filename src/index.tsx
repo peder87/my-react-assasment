@@ -9,8 +9,7 @@ import { composeWithDevTools } from 'redux-devtools-extension';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { reducers } from './reducers';
-
-const store = createStore(reducers, composeWithDevTools(applyMiddleware(thunk)))
+const store = process.env.NODE_ENV !== 'production' ? createStore(reducers, composeWithDevTools(applyMiddleware(thunk))) : createStore(reducers,applyMiddleware(thunk)) 
 
 ReactDOM.render(
   <Provider store={store}>

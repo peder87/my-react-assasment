@@ -6,6 +6,7 @@ import { Toaster } from 'react-hot-toast'
 import { theme } from './style/theme';
 import { routes } from './routes/routes';
 import { ProtectedRoutes } from './routes/protectedRoute';
+import { NotFound } from './pages/404';
 
 
 function App() {
@@ -30,6 +31,7 @@ function App() {
               : 
               <Route key={rest.path} {...rest} element={<Component />} />)
           }
+          <Route path="*" element={<NotFound />} />
         </Routes>
       </ThemeProvider>
     </>
